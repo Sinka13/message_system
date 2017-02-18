@@ -1,0 +1,33 @@
+.row
+  .col-sm-6.box
+    .box-header
+      h4 Users
+    - @users.each_with_index do |user, index|
+      .row.horizontal-divider
+        .col-sm-2
+          = index + 1
+        .col-sm-3
+          = user.username
+        .col-sm-4
+          = user.email
+        .col-sm-3
+          = link_to "Send Message", "#", class: "btn btn-info btn-xs start-conversation",
+                        "data-sid" => current_user.id, "data-rip" => user.id
+  .col-sm-6.box
+    .box-header
+      h4 Your chats
+    - if @chats.present?
+      - @chats.each_with_index do |chat, index|
+        - messages= chat.messages
+        .row.horizontal-divider
+          .col-sm-2
+            = index + 1
+          .col-sm-3
+            = chat.recipient
+          .col-sm-4
+            = messages.count
+          .col-sm-3
+            = link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                          "data-sid" => current_user.id, "data-rip" => user.id
+    - else
+      p No chats found, send message to someone
