@@ -1,0 +1,23 @@
+table.table
+  thead.thead-inverse
+    tr
+      th #
+      th Username
+      th Email
+      th Last active
+      th Actions
+  tbody
+    - @users.each_with_index do |user, index|
+      tr
+        th{scope="row"}
+          = index + 1
+        td
+          = user.username
+        td
+          = user.email
+        td 
+          = user.last_sign_in_at
+        td
+          = link_to raw('<i class="fa fa-eye"></i>'), user_path(user), class: "btn btn-default btn-xs", title: "Show"
+          = link_to raw('<i class="fa fa-pencil"></i>'),edit_user_path(user), class: "btn btn-default btn-xs", title: "Edit"
+          = link_to raw('<i class="fa fa-trash"></i>'), user_path(user), data: {:confirm => 'Are you sure?'}, method: 'delete', class: "btn btn-default btn-xs", title: "Delete"

@@ -1,6 +1,8 @@
 .row
   .col-sm-4.offset-sm-4
+    = notice
     = form_for(@user) do |f|  
+      = hidden_field_tag :id, @user.id
       .form-group
         = f.label :email
         = f.email_field :email, autofocus: true, class: "form-control", required: true
@@ -19,3 +21,4 @@
         = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
       .actions
         = f.submit "Update" , class: 'btn btn-primary'
+        = link_to "Back", @redirect_path, class: "btn btn-default"

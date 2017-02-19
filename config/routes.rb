@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   authenticated :user do
    root 'users#index'
    resources :users
+   scope 'admin' do
+     get '/' => 'admin#index', as: 'admin'
+   end
  end
 
  unauthenticated :user do
