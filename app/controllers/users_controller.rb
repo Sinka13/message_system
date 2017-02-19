@@ -5,8 +5,8 @@ class UsersController < ApplicationController
 
 
   def index
-    @users = User.all#where.not(id: current_user.id)
-    @chats = current_user.chats
+    @users = User.where.not(id: current_user.id)
+    @chats = Chat.involving(current_user)
   end
 
   def edit

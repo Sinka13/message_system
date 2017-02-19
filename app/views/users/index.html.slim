@@ -13,8 +13,7 @@
         .col-sm-4
           = user.email
         .col-sm-3
-          = link_to "Send Message", "#", class: "btn btn-info btn-xs start-conversation",
-                        "data-sid" => current_user.id, "data-rip" => user.id
+          = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
   .col-sm-6.box
     .box-header
       h4 Your chats
@@ -25,11 +24,11 @@
           .col-sm-2
             = index + 1
           .col-sm-3
-            = chat.recipient
+            = set_resipient(chat).username
           .col-sm-4
             = messages.count
           .col-sm-3
-            = link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
-                          "data-sid" => current_user.id, "data-rip" => user.id
+            = link_to "Send Message", chat_path(chat), class: "btn btn-success btn-xs start-conversation"
+                          
     - else
       p No chats found, send message to someone

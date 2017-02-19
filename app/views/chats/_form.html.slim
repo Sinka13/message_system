@@ -1,0 +1,12 @@
+- messages = chat.messages
+div{id="chat-#{chat.id}" class="tab-pane" role="tabpanel"}
+  .row
+    .col-md-12
+      = form_tag chat_messages_path(chat_id: chat.id), remote: true
+        .form-group
+          = hidden_field_tag :chat_id , chat.id  
+        div{id="conversation_body_#{chat.id}"}
+          ul.messages
+            = render messages
+        = text_area_tag "description",nil, rows: 5, placeholder: "Write your message here", class: "col-md-12 form-control message-description", required: true
+        = submit_tag "Send Message", class: "btn btn-default btn-xs"

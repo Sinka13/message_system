@@ -1,0 +1,6 @@
+li{class = "message #message_class(message) appeared"}
+  .text_wrapper
+    .text
+      = "#{message.description} "
+      br
+      span{class="text-muted"} #{message.created_at}

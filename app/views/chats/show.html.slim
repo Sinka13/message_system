@@ -1,0 +1,21 @@
+.row
+  .chat_window
+    .row
+      .col-md-3.chats_list
+        ul class="nav nav-pills nav-justified flex-column" role="tablist"
+          li.nav-item.main-nav
+            a href="#new" data-toggle="tab" class="nav-link active" New chat
+          - @chats.each do |chat|
+            - messages = chat.messages.where(is_new: true)
+            li.nav-item
+              = link_to "#chat-#{chat.id}", class: "nav-link", data: {toggle: "tab"} do
+                = "#{set_resipient(chat).username} "
+                - if messages.count > 0
+                  span.badge.badge-pill.badge-info = "#{messages.count}"
+      .col-md-9.tab-content.conversation_body
+        - @chats.each do |chat|
+          = render 'form', chat: chat
+      
+= stylesheet_link_tag \
+    "messages",
+    media: 'all', 'data-turbolinks-track' => true

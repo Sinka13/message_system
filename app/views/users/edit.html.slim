@@ -9,7 +9,12 @@
       .form-group
         = f.label :username
         = f.text_field :username, class: "form-control", required: true
-        
+      .form-group
+        = f.label :firstname
+        = f.text_field :firstname, class: "form-control"
+      .form-group
+        = f.label :lastname
+        = f.text_field :lastname, class: "form-control"
       .form-group
         = f.label :password
         - if @minimum_password_length
