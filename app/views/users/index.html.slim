@@ -1,34 +1,37 @@
-.row 
-
 .row
-  .col-sm-6.box
-    .box-header
-      h4 Users
-    - @users.each_with_index do |user, index|
-      .row.horizontal-divider
-        .col-sm-2
-          = index + 1
-        .col-sm-3
-          = user.username
-        .col-sm-4
-          = user.email
-        .col-sm-3
-          = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
-  .col-sm-6.box
-    .box-header
-      h4 Your chats
-    - if @chats.present?
-      - @chats.each_with_index do |chat, index|
-        - messages= chat.messages
-        .row.horizontal-divider
-          .col-sm-2
-            = index + 1
-          .col-sm-3
-            = set_resipient(chat).username
-          .col-sm-4
-            = messages.count
-          .col-sm-3
-            = link_to "Send Message", chat_path(chat), class: "btn btn-success btn-xs start-conversation"
-                          
-    - else
-      p No chats found, send message to someone
+  .col-sm-6
+    table.table-striped.table-bordered
+      thead.bg-info
+        th{colspan="4"} Users
+      tbody
+        - @users.each_with_index do |user, index|
+          tr
+            td.col-sm-1
+              = index + 1
+            td.col-sm-4
+              = user.username
+            td.col-sm-3
+              = user.email
+            td{class="col-sm-4" style="padding: 0px"}
+              = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
+  .col-sm-6
+    table.table-striped.table-bordered
+      thead.bg-success
+        th{colspan="4"} Your chats
+      tbody
+        - if @chats.present?
+          - @chats.each_with_index do |chat, index|
+            - messages= chat.messages
+            tr
+              td.col-sm-1
+                = index + 1
+              td.col-sm-4
+                = set_resipient(chat).username
+              td.col-sm-3
+                = messages.count
+              td{class="col-sm-4" style="padding: 0px"}
+                = link_to "Send Message", chat_path(chat), class: "btn btn-success btn-xs start-conversation"
+        - else
+          tr
+            td{colspan="4"}
+              |  No chats found, send message to someone

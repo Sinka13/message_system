@@ -6,18 +6,21 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .row
-      .col-sm-12
-        ul.nav.nav-pills.nav-justified
-          ul.nav-item 
-            = link_to "Main", root_path, class:"nav-link active"
-          ul.nav-item 
-            a{class="nav-link" href="#chats"} Chats 
-          ul.nav-item
-            = link_to "Profile", edit_user_path(current_user), class:"nav-link"
-          - if current_user.is_admin?
-            ul.nav-item
-              = link_to "Admin log", admin_path, class:"nav-link"
-          ul.nav-item 
-            = link_to "Log out", destroy_user_session_path, method: 'delete',class:"nav-link"
+    nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+      button{class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"}
+        span.navbar-toggler-icon
+      = link_to "ChatsApp", root_path, class: "navbar-brand"
+      div{class="collapse navbar-collapse" id="navbarNav"}
+          ul.navbar-nav
+            li.nav-item.active
+              = link_to "Home", root_path, class:"nav-link active"
+            li.nav-item 
+              a{class="nav-link" href="#chats"} Chats 
+            li.nav-item
+              = link_to "Profile", edit_user_path(current_user), class:"nav-link"
+            - if current_user.is_admin?
+              li.nav-item
+                = link_to "Admin log", admin_path, class:"nav-link"
+            li.nav-item 
+              = link_to "Log out", destroy_user_session_path, method: 'delete',class:"nav-link"
   = yield
