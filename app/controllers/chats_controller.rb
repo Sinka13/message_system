@@ -8,17 +8,23 @@ class ChatsController < ApplicationController
     else
        @chat = Chat.create!(chat_params)
     end
-    redirect_to chat_path(@chat)
+    if params[:message].present?
+      message = @chat.messages.build(message_params.merge(user_id: current_user.id))
+      message.save
+    end
+    redirect_to chats_path(chat: @chat.id)
   end
 
-  def show
-    @chat = Chat.includes(:messages).find_by_id(params[:id])
+  def index
     @chats = Chat.involving(current_user).includes(:messages)
+    @users = User.where.not(id: current_user.id)
   end
 
   private
   def chat_params
     params.permit(:sender_id,:resipient_id)
   end
-
+  def message_params
+    params.require(:message).permit(:description)
+  end
 end

@@ -1,8 +1,8 @@
 .row
   .col-sm-6
     table.table-striped.table-bordered
-      thead.bg-info
-        th{colspan="4"} Users
+      thead.box-header
+        th.text-center{colspan="4"} Users
       tbody
         - @users.each_with_index do |user, index|
           tr
@@ -16,12 +16,12 @@
               = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
   .col-sm-6
     table.table-striped.table-bordered
-      thead.bg-success
-        th{colspan="4"} Your chats
+      thead.box-header.text-center
+        th.text-center{colspan="4"} Your chats
       tbody
         - if @chats.present?
           - @chats.each_with_index do |chat, index|
-            - messages= chat.messages
+            - messages= chat.messages.unread(current_user)
             tr
               td.col-sm-1
                 = index + 1
@@ -30,7 +30,7 @@
               td.col-sm-3
                 = messages.count
               td{class="col-sm-4" style="padding: 0px"}
-                = link_to "Send Message", chat_path(chat), class: "btn btn-success btn-xs start-conversation"
+                = link_to "Send Message", chats_path(chat: chat.id), class: "btn btn-success btn-xs start-conversation"
         - else
           tr
             td{colspan="4"}
