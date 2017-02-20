@@ -1,37 +1,53 @@
-.row
-  .col-sm-6
-    table.table-striped.table-bordered
-      thead.box-header
-        th.text-center{colspan="4"} Users
-      tbody
-        - @users.each_with_index do |user, index|
-          tr
-            td.col-sm-1
-              = index + 1
-            td.col-sm-4
-              = user.username
-            td.col-sm-3
-              = user.email
-            td{class="col-sm-4" style="padding: 0px"}
-              = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
-  .col-sm-6
-    table.table-striped.table-bordered
-      thead.box-header.text-center
-        th.text-center{colspan="4"} Your chats
-      tbody
-        - if @chats.present?
-          - @chats.each_with_index do |chat, index|
-            - messages= chat.messages.unread(current_user)
+- new_messages_count = new_messages(@chats, current_user)
+- if new_messages_count > 0
+  .row.notification
+    .alert.alert-success.alert-dismissible.fade.show.col-sm-12.text-center{role="alert"} 
+      button{type="button" class="close" data-dismiss="alert" aria-label="Close"}
+        span{aria-hidden="true"} &times
+      strong Hello #{current_user.username.capitalize}! 
+      | You have #{pluralize(new_messages_count,"unread message")}
+  .row
+    .col-sm-6
+      table.table-striped.table-bordered
+        thead.box-header
+          th.text-center{colspan="4"} Users
+        tbody
+          - @users.each_with_index do |user, index|
             tr
               td.col-sm-1
                 = index + 1
               td.col-sm-4
-                = set_resipient(chat).username
+                = user.username
               td.col-sm-3
-                = messages.count
+                = user.email
               td{class="col-sm-4" style="padding: 0px"}
-                = link_to "Send Message", chats_path(chat: chat.id), class: "btn btn-success btn-xs start-conversation"
-        - else
-          tr
-            td{colspan="4"}
-              |  No chats found, send message to someone
+                = link_to "Send Message", chats_path(sender_id: current_user.id, resipient_id: user.id), method: 'post', class: "btn btn-info btn-xs start-conversation"
+    .col-sm-6
+      table.table-striped.table-bordered
+        thead.box-header.text-center
+          th.text-center{colspan="4"} Your chats
+        tbody
+          - if @chats.present?
+            - @chats.each_with_index do |chat, index|
+              - messages= chat.messages.unread(current_user)
+              tr
+                td.col-sm-1
+                  = index + 1
+                td.col-sm-4
+                  = set_resipient(chat).username
+                td.col-sm-3
+                  = messages.count
+                td{class="col-sm-4" style="padding: 0px"}
+                  = link_to "Send Message", chats_path(chat: chat.id), class: "btn btn-success btn-xs start-conversation"
+          - else
+            tr
+              td{colspan="4"}
+                |  No chats found, send message to someone
+
+javascript:
+  $(document).ready(
+  function() {
+   setInterval(function() {
+  // update notification and msg count
+  }, 10000);
+  });
