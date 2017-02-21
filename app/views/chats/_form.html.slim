@@ -8,5 +8,6 @@ div{id="chat-#{chat.id}" class="tab-pane" role="tabpanel"}
         div{id="conversation_body_#{chat.id}"}
           ul.messages
             = render messages
-        = text_area_tag "description",nil, rows: 5, placeholder: "Write your message here", class: "col-md-12 form-control message-description", required: true
+        .form-group.row
+          = text_area_tag "description",nil, rows: 5, placeholder: "Write your message here", class: "col-md-12 form-control message-description", required: true
         = submit_tag "Send Message", anchor: "chat-#{chat.id}", class: "btn btn-primary btn-xs pull-right"

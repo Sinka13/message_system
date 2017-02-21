@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   before_action :is_admin?
 
   def index
-    @users = User.all
+    @users = User.all.order(last_sign_in_at: :desc).page params[:page]
   end
 
   private
