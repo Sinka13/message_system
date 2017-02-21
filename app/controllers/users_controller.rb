@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
 
   def index
-    @users = User.where.not(id: current_user.id)
+    @users = User.where.not(id: current_user.id).order(:username).page params[:page]
     @chats = Chat.involving(current_user)
   end
 
