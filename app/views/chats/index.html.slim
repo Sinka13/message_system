@@ -8,10 +8,10 @@
           - @chats.each do |chat|
             - messages = chat.messages.unread(current_user)
             li.nav-item
-              = link_to "#chat-#{chat.id}", class: "nav-link", data: {toggle: "tab"} do
+              = link_to "#chat-#{chat.id}", class: "nav-link chat-name", data: {toggle: "tab"} do
                 = "#{set_resipient(chat).username} "
                 - if messages.count > 0
-                  span.badge.badge-pill.badge-info = "#{messages.count}"
+                  span.badge.badge-pill.badge-info{id = "#{chat.id}"} = "#{messages.count}"
       .col-md-9.tab-content.conversation_body
         = render 'new_form'
         - @chats.each do |chat|
@@ -23,8 +23,16 @@
 
 javascript:
   
-    $('li').on('click',function(){
+    $('a.nav-link.chat-name').on('click',function(){
       $('.messages').animate({scrollTop:10000});
+        var chat_id = $(this).attr("href").split("-")[1]
+      $.ajax({
+          url: "/read_messages",
+          type: "POST",
+          data: {chat_id: chat_id },
+        success: function(resp){ 
+          $('#' + chat_id).html("")}
+    });
     });
 
     var url = document.location.toString();

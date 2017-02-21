@@ -20,6 +20,16 @@ class ChatsController < ApplicationController
     @users = User.where.not(id: current_user.id)
   end
 
+  def read_messages
+    chat = Chat.find_by_id params[:chat_id]
+    if chat.messages.unread(current_user).update_all(is_new: false)
+      respond_to do |format|
+        format.json { head :ok }
+      end
+    end
+  end
+
+
   private
   def chat_params
     params.permit(:sender_id,:resipient_id)

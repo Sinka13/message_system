@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   authenticated :user do
    root 'users#index'
    resources :users
+   post 'read_messages' => 'chats#read_messages'
    scope 'admin' do
      get '/' => 'admin#index', as: 'admin'
    end
