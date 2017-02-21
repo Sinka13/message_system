@@ -18,15 +18,15 @@ class ChatsController < ApplicationController
   def index
     @chats = Chat.involving(current_user).includes(:messages)
     @users = User.where.not(id: current_user.id)
+    if params[:chat].present?
+      chat = Chat.find_by_id params[:chat]
+      chat.messages.unread(current_user).update_all(is_new: false)
+    end
   end
 
   def read_messages
     chat = Chat.find_by_id params[:chat_id]
-    if chat.messages.unread(current_user).update_all(is_new: false)
-      respond_to do |format|
-        format.json { head :ok }
-      end
-    end
+    chat.messages.unread(current_user).update_all(is_new: false)
   end
 
 

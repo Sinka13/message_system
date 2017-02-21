@@ -38,7 +38,7 @@ javascript:
     var url = document.location.toString();
     console.log(url);
     if (url.match('/?')) {
-      $('li.nav-item a[href="#' + url.split("?")[1].replace("=","-") + '"]').tab('show')
+      $('li.nav-item a[href="#' + url.split("?")[1].replace("=","-") + '"]').tab('show');
     }
     //Change hash for page-reload
     $('li.nav-item a[href="#' + url.split("?")[1].replace("=","-") + '"]').on('shown', function (e) {

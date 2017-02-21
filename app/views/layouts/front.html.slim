@@ -17,7 +17,7 @@ html
             li.nav-item 
               a{class="nav-link" href="/chats"} Chats 
             li.nav-item
-              = link_to "Profile", edit_user_path(current_user), class:"nav-link"
+              = link_to "Profile (#{current_user.username.capitalize})", edit_user_path(current_user), class:"nav-link"
             - if current_user.is_admin?
               li.nav-item
                 = link_to "Admin log", admin_path, class:"nav-link"

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
    root 'users#index'
    resources :users
    post 'read_messages' => 'chats#read_messages'
+   get 'update_notification' => 'users#update_notification'
    scope 'admin' do
      get '/' => 'admin#index', as: 'admin'
    end

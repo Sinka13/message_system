@@ -1,11 +1,5 @@
-- count_new = @chats.joins(:messages).new_messages(current_user).count
-- if count_new > 0
-  .row.notification
-    .alert.alert-success.alert-dismissible.fade.show.col-sm-12.text-center{role="alert"} 
-      button{type="button" class="close" data-dismiss="alert" aria-label="Close"}
-        span{aria-hidden="true"} &times
-      strong Hello #{current_user.username.capitalize}! 
-      | You have #{pluralize( count_new, "unread message")}
+.row#notification
+  = render 'notification'
 .row
   .col-sm-6
     table.table-striped.table-bordered
@@ -30,15 +24,7 @@
         - if @chats.present?
           - @chats.each_with_index do |chat, index|
             - messages= chat.messages.unread(current_user)
-            tr
-              td.col-sm-1
-                = index + 1
-              td.col-sm-4
-                = set_resipient(chat).username
-              td.col-sm-3
-                = messages.count
-              td{class="col-sm-4" style="padding: 0px"}
-                = link_to "Send Message", chats_path(chat: chat.id), class: "btn btn-success btn-xs start-conversation"
+            = link_to "Send Message", chats_path(chat: chat.id), class: "btn btn-success btn-xs start-conversation"
         - else
           tr
             td{colspan="4"}
@@ -48,6 +34,9 @@ javascript:
     $(document).ready(
     function() {
      setInterval(function() {
-    // update notification and msg count
-    }, 10000);
+     $.ajax({
+         url: "/update_notification",
+         type: "GET"
+   });
+    }, 5000);
     });

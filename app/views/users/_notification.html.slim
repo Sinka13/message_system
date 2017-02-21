@@ -1,0 +1,7 @@
+- count_new = @chats.joins(:messages).new_messages(current_user).count
+- if count_new > 0
+  .alert.alert-success.alert-dismissible.fade.show.col-sm-12.text-center{role="alert"} 
+    button{type="button" class="close" data-dismiss="alert" aria-label="Close"}
+      span{aria-hidden="true"} &times
+    strong Hello #{current_user.username.capitalize}! 
+    | You have #{pluralize( count_new, "unread message")}

@@ -20,6 +20,13 @@ class UsersController < ApplicationController
     redirect_back fallback_location: root_path, notice: "User deleted" if @user.destroy
   end
 
+  def update_notification
+    @chats = Chat.involving(current_user)
+    respond_to do |format|
+      format.js {}
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:username,:password,:email,:password_confirmation).reject{|_, v| v.blank?}
